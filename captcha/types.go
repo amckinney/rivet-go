@@ -2,6 +2,12 @@
 
 package captcha
 
+// Methods to verify a captcha
+type Config struct {
+	Hcaptcha  *ConfigHcaptcha  `json:"hcaptcha,omitempty"`
+	Turnstile *ConfigTurnstile `json:"turnstile,omitempty"`
+}
+
 // Captcha configuration.
 type ConfigHcaptcha struct {
 	ClientResponse string `json:"client_response"`

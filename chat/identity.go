@@ -4,7 +4,7 @@ package chat
 
 import (
 	uuid "github.com/gofrs/uuid/v5"
-	identity "github.com/rivet-gg/rivet-go/identity"
+	identity "github.com/rivet-gg/rivet-go/common/identity"
 )
 
 type GetDirectThreadResponse struct {

@@ -4,6 +4,7 @@ package matchmaker
 
 import (
 	fmt "fmt"
+
 	captcha "github.com/rivet-gg/rivet-go/captcha"
 	core "github.com/rivet-gg/rivet-go/core"
 )
@@ -38,12 +39,6 @@ type ListLobbiesRequest struct {
 
 type SetLobbyClosedRequest struct {
 	IsClosed bool `json:"is_closed"`
-}
-
-// Methods to verify a captcha
-type Config struct {
-	Hcaptcha  *ConfigHcaptcha  `json:"hcaptcha,omitempty"`
-	Turnstile *ConfigTurnstile `json:"turnstile,omitempty"`
 }
 
 type CustomLobbyPublicity string

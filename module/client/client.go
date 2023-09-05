@@ -8,11 +8,12 @@ import (
 	json "encoding/json"
 	errors "errors"
 	fmt "fmt"
-	rivetgo "github.com/rivet-gg/rivet-go"
-	core "github.com/rivet-gg/rivet-go/core"
-	module "github.com/rivet-gg/rivet-go/module"
 	io "io"
 	http "net/http"
+
+	rivetgo "github.com/rivet-gg/rivet-go"
+	core "github.com/rivet-gg/rivet-go/core"
+	_module "github.com/rivet-gg/rivet-go/module"
 )
 
 type Client struct {
@@ -34,7 +35,7 @@ func NewClient(opts ...core.ClientOption) *Client {
 }
 
 // Makes a request to a module's script.
-func (c *Client) Call(ctx context.Context, module string, script string, request *module.FindLobbyRequest) (*module.CallResponse, error) {
+func (c *Client) Call(ctx context.Context, module string, script string, request *_module.FindLobbyRequest) (*_module.CallResponse, error) {
 	baseURL := "https://module.api.rivet.gg/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -100,7 +101,7 @@ func (c *Client) Call(ctx context.Context, module string, script string, request
 		return apiError
 	}
 
-	var response *module.CallResponse
+	var response *_module.CallResponse
 	if err := core.DoRequest(
 		ctx,
 		c.httpClient,

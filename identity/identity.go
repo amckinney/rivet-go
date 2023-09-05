@@ -3,14 +3,16 @@
 package identity
 
 import (
+	time "time"
+
 	uuid "github.com/gofrs/uuid/v5"
 	rivetgo "github.com/rivet-gg/rivet-go"
+	identity "github.com/rivet-gg/rivet-go/common/identity"
 	upload "github.com/rivet-gg/rivet-go/upload"
-	time "time"
 )
 
 type GetHandlesResponse struct {
-	Identities []*Handle              `json:"identities,omitempty"`
+	Identities []*identity.Handle     `json:"identities,omitempty"`
 	Watch      *rivetgo.WatchResponse `json:"watch,omitempty"`
 }
 
@@ -25,30 +27,30 @@ type GetSummariesResponse struct {
 }
 
 type ListFollowersResponse struct {
-	Identities []*Handle              `json:"identities,omitempty"`
+	Identities []*identity.Handle     `json:"identities,omitempty"`
 	Anchor     *string                `json:"anchor,omitempty"`
 	Watch      *rivetgo.WatchResponse `json:"watch,omitempty"`
 }
 
 type ListFollowingResponse struct {
-	Identities []*Handle              `json:"identities,omitempty"`
+	Identities []*identity.Handle     `json:"identities,omitempty"`
 	Anchor     *string                `json:"anchor,omitempty"`
 	Watch      *rivetgo.WatchResponse `json:"watch,omitempty"`
 }
 
 type ListFriendsResponse struct {
-	Identities []*Handle              `json:"identities,omitempty"`
+	Identities []*identity.Handle     `json:"identities,omitempty"`
 	Anchor     *string                `json:"anchor,omitempty"`
 	Watch      *rivetgo.WatchResponse `json:"watch,omitempty"`
 }
 
 type ListMutualFriendsResponse struct {
-	Identities []*Handle `json:"identities,omitempty"`
-	Anchor     *string   `json:"anchor,omitempty"`
+	Identities []*identity.Handle `json:"identities,omitempty"`
+	Anchor     *string            `json:"anchor,omitempty"`
 }
 
 type ListRecentFollowersResponse struct {
-	Identities []*Handle              `json:"identities,omitempty"`
+	Identities []*identity.Handle     `json:"identities,omitempty"`
 	Anchor     *string                `json:"anchor,omitempty"`
 	Watch      *rivetgo.WatchResponse `json:"watch,omitempty"`
 }
@@ -59,7 +61,7 @@ type PrepareAvatarUploadResponse struct {
 }
 
 type SearchResponse struct {
-	Identities []*Handle `json:"identities,omitempty"`
+	Identities []*identity.Handle `json:"identities,omitempty"`
 	// The pagination anchor.
 	Anchor *string `json:"anchor,omitempty"`
 }

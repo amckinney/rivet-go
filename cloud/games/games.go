@@ -6,7 +6,7 @@ import (
 	uuid "github.com/gofrs/uuid/v5"
 	rivetgo "github.com/rivet-gg/rivet-go"
 	cloud "github.com/rivet-gg/rivet-go/cloud"
-	group "github.com/rivet-gg/rivet-go/group"
+	group "github.com/rivet-gg/rivet-go/common/group"
 	upload "github.com/rivet-gg/rivet-go/upload"
 )
 

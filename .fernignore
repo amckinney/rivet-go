@@ -1,1 +1,17 @@
 # Specify files that shouldn't be modified by Fern
+
+captcha/types.go
+chat/identity.go
+chat/types.go
+cloud/games/games.go
+common/game/types.go
+common/group/types.go
+common/identity/types.go
+group/group.go
+group/invites.go
+group/types.go
+identity/identity.go
+identity/links.go
+identity/types.go
+matchmaker/lobbies.go
+module/client/client.go

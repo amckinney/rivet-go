@@ -4,11 +4,12 @@ package chat
 
 import (
 	fmt "fmt"
+	time "time"
+
 	uuid "github.com/gofrs/uuid/v5"
 	rivetgo "github.com/rivet-gg/rivet-go"
-	group "github.com/rivet-gg/rivet-go/group"
-	identity "github.com/rivet-gg/rivet-go/identity"
-	time "time"
+	group "github.com/rivet-gg/rivet-go/common/group"
+	identity "github.com/rivet-gg/rivet-go/common/identity"
 )
 
 type GetThreadHistoryRequest struct {

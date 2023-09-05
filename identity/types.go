@@ -4,14 +4,16 @@ package identity
 
 import (
 	fmt "fmt"
+	time "time"
+
 	uuid "github.com/gofrs/uuid/v5"
 	rivetgo "github.com/rivet-gg/rivet-go"
 	chat "github.com/rivet-gg/rivet-go/chat"
+	group "github.com/rivet-gg/rivet-go/common/group"
+	identity "github.com/rivet-gg/rivet-go/common/identity"
 	core "github.com/rivet-gg/rivet-go/core"
 	game "github.com/rivet-gg/rivet-go/game"
-	group "github.com/rivet-gg/rivet-go/group"
 	matchmaker "github.com/rivet-gg/rivet-go/matchmaker"
-	time "time"
 )
 
 type GetHandlesRequest struct {
@@ -126,27 +128,6 @@ type EmailLinkedAccount struct {
 	Email rivetgo.Email `json:"email"`
 }
 
-// External links for an identity.
-type ExternalLinks struct {
-	// A link to this identity's profile page.
-	Profile string `json:"profile"`
-	// A link to the Rivet settings page.
-	Settings *string `json:"settings,omitempty"`
-	// A link to a chat page with the given identity.
-	Chat *string `json:"chat,omitempty"`
-}
-
-// The game an identity is currently participating in.
-type GameActivity struct {
-	Game *game.Handle `json:"game,omitempty"`
-	// A short activity message about the current game activity.
-	Message string `json:"message"`
-	// JSON data seen by anyone.
-	PublicMetadata *any `json:"public_metadata,omitempty"`
-	// JSON data seen only by the given identity and their mutual followers.
-	MutualMetadata *any `json:"mutual_metadata,omitempty"`
-}
-
 type GameLinkStatus string
 
 const (
@@ -242,29 +223,9 @@ type Group struct {
 	Group *group.Handle `json:"group,omitempty"`
 }
 
-// An identity handle.
-type Handle struct {
-	IdentityId    uuid.UUID             `json:"identity_id"`
-	DisplayName   rivetgo.DisplayName   `json:"display_name"`
-	AccountNumber rivetgo.AccountNumber `json:"account_number"`
-	// The URL of this identity's avatar image.
-	AvatarUrl string    `json:"avatar_url"`
-	Presence  *Presence `json:"presence,omitempty"`
-	// Whether or not this identity is registered with a linked account.
-	IsRegistered bool           `json:"is_registered"`
-	External     *ExternalLinks `json:"external,omitempty"`
-}
-
 // A union representing an identity's linked accounts.
 type LinkedAccount struct {
 	Email *EmailLinkedAccount `json:"email,omitempty"`
-}
-
-// Information about the identity's current status, party, and active game.
-type Presence struct {
-	UpdateTs     time.Time     `json:"update_ts"`
-	Status       Status        `json:"status,omitempty"`
-	GameActivity *GameActivity `json:"game_activity,omitempty"`
 }
 
 // An identity profile.
@@ -273,11 +234,11 @@ type Profile struct {
 	DisplayName   rivetgo.DisplayName   `json:"display_name"`
 	AccountNumber rivetgo.AccountNumber `json:"account_number"`
 	// The URL of this identity's avatar image.
-	AvatarUrl string    `json:"avatar_url"`
-	Presence  *Presence `json:"presence,omitempty"`
+	AvatarUrl string             `json:"avatar_url"`
+	Presence  *identity.Presence `json:"presence,omitempty"`
 	// Whether or not this identity is registered with a linked account.
-	IsRegistered bool           `json:"is_registered"`
-	External     *ExternalLinks `json:"external,omitempty"`
+	IsRegistered bool                    `json:"is_registered"`
+	External     *identity.ExternalLinks `json:"external,omitempty"`
 	// Whether or not this identity is an admin.
 	IsAdmin bool `json:"is_admin"`
 	// Whether or not this game user has been linked through the Rivet dashboard.
@@ -301,43 +262,17 @@ type Profile struct {
 	AwaitingDeletion *bool `json:"awaiting_deletion,omitempty"`
 }
 
-// The current status of an identity. This helps players understand if another player is currently playing or has their game in the background.
-type Status string
-
-const (
-	StatusOnline  Status = "online"
-	StatusAway    Status = "away"
-	StatusOffline Status = "offline"
-)
-
-func NewStatusFromString(s string) (Status, error) {
-	switch s {
-	case "online":
-		return StatusOnline, nil
-	case "away":
-		return StatusAway, nil
-	case "offline":
-		return StatusOffline, nil
-	}
-	var t Status
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (s Status) Ptr() *Status {
-	return &s
-}
-
 // An identity summary.
 type Summary struct {
 	IdentityId    uuid.UUID             `json:"identity_id"`
 	DisplayName   rivetgo.DisplayName   `json:"display_name"`
 	AccountNumber rivetgo.AccountNumber `json:"account_number"`
 	// The URL of this identity's avatar image.
-	AvatarUrl string    `json:"avatar_url"`
-	Presence  *Presence `json:"presence,omitempty"`
+	AvatarUrl string             `json:"avatar_url"`
+	Presence  *identity.Presence `json:"presence,omitempty"`
 	// Whether or not this identity is registered with a linked account.
-	IsRegistered bool           `json:"is_registered"`
-	External     *ExternalLinks `json:"external,omitempty"`
+	IsRegistered bool                    `json:"is_registered"`
+	External     *identity.ExternalLinks `json:"external,omitempty"`
 	// Whether or not the requestee's identity is following this identity.
 	Following bool `json:"following"`
 	// Whether or not this identity is both followng and is followed by the requestee's identity.
@@ -368,7 +303,7 @@ type UpdateProfileRequest struct {
 }
 
 type UpdateStatusRequest struct {
-	Status Status `json:"status,omitempty"`
+	Status identity.Status `json:"status,omitempty"`
 }
 
 type ValidateProfileRequest struct {
